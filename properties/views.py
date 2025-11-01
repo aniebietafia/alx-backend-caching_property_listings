@@ -10,9 +10,12 @@ def property_list(request):
     Uses low-level cache API to cache queryset for 1 hour.
     View response is also cached for 15 minutes.
     """
-    properties = get_all_properties()
+    response = get_all_properties()
+
+    # Extract properties list from the response
+    properties = response.get('data', [])
 
     return JsonResponse({
         'count': len(properties),
-        'properties': properties
+        'data': properties
     }, safe=False)
