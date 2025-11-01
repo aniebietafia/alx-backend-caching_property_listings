@@ -28,13 +28,18 @@ def get_all_properties():
 
     # Convert to list to make it serializable for Redis
     properties_list = list(properties.values(
-        'id', 'title', 'description', 'price', 'location', 'created_at'
+        'property_id', 'title', 'description', 'price', 'location', 'created_at'
     ))
 
     # Store in cache for 1 hour (3600 seconds)
     cache.set('all_properties', properties_list, 3600)
 
-    return properties_list
+    return {
+        "status": "success",
+        "status_code": 200,
+        "message": "Properties fetched successfully",
+        "data": properties_list
+    }
 
 
 def get_redis_cache_metrics():
